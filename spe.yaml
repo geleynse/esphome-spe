@@ -1,0 +1,31 @@
+esphome:
+  name: spe
+  includes:
+    - spe.h
+    - lib/spelib/src/
+  libraries:
+    - "SPI"
+    - "Wire"
+
+esp32:
+  board: sparkfun_esp32micromod
+  framework:
+    type: arduino
+    version: 2.0.0 # Crashes with newer versions
+
+logger:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# Example configuration entry
+sensor:
+- platform: custom
+  lambda: |-
+    auto spe = new Spe();
+    App.register_component(spe);
+    return {spe};
+
+  sensors:
+    name: "SPE"
